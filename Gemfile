@@ -6,7 +6,6 @@ source "https://rubygems.org"
 gem 'bundler'
 gem 'httparty', "~> 0.18.1"
 gem 'download', "~> 1.1.0"
-gem 'glimmer', "~> 1.0.0"
 gem 'tty-progressbar', "~> 0.17.0"
 
 # Add dependencies to develop your gem here.

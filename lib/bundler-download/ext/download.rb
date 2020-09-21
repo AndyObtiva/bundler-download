@@ -27,15 +27,14 @@ module Download
     
     def start(hash={})
       set_multi(hash)
-
       File.delete(file_path) if File.exist?(file_path)
       
       head_response = HTTParty.head(url)
       uri = head_response.request.uri
       content_length = head_response.headers["content-length"]
-      puts "Download file name: #{uri.path.split('/').last}"
-      puts "Download file size: #{content_length}"
-      puts "Download file path: #{file_path}"
+      puts "Download URL: #{uri.to_s}"
+      puts "Download size: #{content_length}"
+      puts "Download path: #{file_path}"
       file_size = content_length.to_f
       progress_total = (file_size / DOWNLOAD_CHUNK_SIZE).ceil
       bar = TTY::ProgressBar.new("Downloading :percent ( :eta ) [:bar]", total: progress_total)

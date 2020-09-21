@@ -24,8 +24,6 @@ Gem::Specification.new do |s|
     "VERSION",
     "lib/bundler-download.rb",
     "lib/bundler-download/ext/download.rb",
-    "lib/bundler-download/ext/glimmer/dsl/downloadfile/download_expression.rb",
-    "lib/bundler/download.rb",
     "lib/bundler/downloadfile.rb",
     "plugins.rb"
   ]
@@ -42,7 +40,6 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency(%q<bundler>.freeze, [">= 0"])
     s.add_runtime_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
     s.add_runtime_dependency(%q<download>.freeze, ["~> 1.1.0"])
-    s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 1.0.0"])
     s.add_runtime_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
     s.add_development_dependency(%q<rspec>.freeze, ["~> 3.5.0"])
     s.add_development_dependency(%q<rdoc>.freeze, ["~> 3.12"])
@@ -55,7 +52,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>.freeze, [">= 0"])
     s.add_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
     s.add_dependency(%q<download>.freeze, ["~> 1.1.0"])
-    s.add_dependency(%q<glimmer>.freeze, ["~> 1.0.0"])
     s.add_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
     s.add_dependency(%q<rspec>.freeze, ["~> 3.5.0"])
     s.add_dependency(%q<rdoc>.freeze, ["~> 3.12"])

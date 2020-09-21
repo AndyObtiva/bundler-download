@@ -22,28 +22,17 @@
 require 'bundler'
 require 'download'
 require 'fileutils'
-require 'glimmer'
 require 'httparty'
 require 'tty-progressbar'
 
 $LOAD_PATH.unshift(File.expand_path('..', __FILE__))
 
-Glimmer::Config.loop_max_count = 1_000_000
- 
-Glimmer::Config.excluded_keyword_checkers << lambda do |method_symbol, *args|
-  method = method_symbol.to_s
-  result = false
-  result ||= method == 'load_iseq'
-  result ||= method == 'handle'
-  result ||= method == 'begin'
-end
-
-
-require 'bundler-download/ext/glimmer/dsl/downloadfile/download_expression'
 require 'bundler-download/ext/download'
 require 'bundler/downloadfile'
 
 Bundler::Plugin.add_hook('after-install-all') do |dependencies|
-  downloadfile = File.read('Downloadfile')
-  Bundler::Downloadfile.new(downloadfile).call
+  Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).each do |downloadfile|
+    Bundler::Downloadfile.new(File.read(downloadfile), gem_path: File.dirname(downloadfile)).call
+  end
+  true
 end
