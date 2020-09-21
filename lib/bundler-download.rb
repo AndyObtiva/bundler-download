@@ -41,3 +41,9 @@ end
 
 require 'bundler-download/ext/glimmer/dsl/downloadfile/download_expression'
 require 'bundler-download/ext/download'
+require 'bundler/downloadfile'
+
+Bundler::Plugin.add_hook('after-install-all') do |dependencies|
+  downloadfile = File.read('Downloadfile')
+  Bundler::Downloadfile.new(downloadfile).call
+end

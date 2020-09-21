@@ -1,4 +1,3 @@
 # TODO
 
-- Show download progress (perhaps using tty-progress)
-- Build Bundler plugin
+- Build Bundler plugin to autodownload Downloadfile from all installed gems

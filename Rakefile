@@ -21,6 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Bundler plugin for auto-downloading specified extra files after gem install}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["AndyMaleh"]
+  gem.files = Dir['README.md', 'LICENSE.txt', 'VERSION', 'CHANGELOG.md', 'plugins.rb', 'lib/**/*']  
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
