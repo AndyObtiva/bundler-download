@@ -19,25 +19,23 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'bundler'
-require 'download'
-require 'fileutils'
-require 'glimmer'
-require 'httparty'
-require 'tty-progressbar'
+require 'glimmer/dsl/static_expression'
+require 'glimmer/dsl/parent_expression'
+require 'glimmer/dsl/top_level_expression'
 
-$LOAD_PATH.unshift(File.expand_path('..', __FILE__))
+require 'bundler/download'
 
-Glimmer::Config.loop_max_count = 1_000_000
- 
-Glimmer::Config.excluded_keyword_checkers << lambda do |method_symbol, *args|
-  method = method_symbol.to_s
-  result = false
-  result ||= method == 'load_iseq'
-  result ||= method == 'handle'
-  result ||= method == 'begin'
+module Glimmer
+  module DSL
+    module Downloadfile
+      class DownloadExpression < StaticExpression
+        include ParentExpression
+        include TopLevelExpression
+        
+        def interpret(parent, keyword, *args, &block)
+          Bundler::Download.new(*args).call
+        end
+      end
+    end
+  end
 end
-
-
-require 'bundler-download/ext/glimmer/dsl/downloadfile/download_expression'
-require 'bundler-download/ext/download'

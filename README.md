@@ -1,4 +1,5 @@
 # bundler-download
+
 Bundler plugin for auto-downloading specified extra files after gem install
 
 ## Instructions
@@ -19,7 +20,7 @@ Afterwards, ensure there is a [`Downloadfile`](#downloadfile) in the root direct
     ]
 ```
 
-## `Downloadfile`
+## Downloadfile
 
 Just create `Downloadfile` in your project and fill it with download links for files to be downloaded into the gem directory after install.
 
@@ -28,9 +29,9 @@ Example of `Downloadfile`:
 ```
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.gtk.linux.x86_64_0.4.0.202005172227.jar' # downloads into gem root directory
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar', 
-  to: 'vendor' # downloads into vendor directory under the gem installation directory
+  to: 'tmp' # downloads into vendor directory under the gem installation directory
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.win32.win32.x86_64_0.4.0.202005172227.jar',
-  to: 'vendor/windows' # downloads into vendor/windows directory under the gem installation directory
+  to: 'tmp/windows' # downloads into vendor/windows directory under the gem installation directory
 ```
 
 ## Contributing to bundler-download
@@ -48,4 +49,3 @@ download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.ma
 [MIT](LICENSE.txt)
 
 Copyright (c) 2020 Andy Maleh.
-

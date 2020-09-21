@@ -19,25 +19,20 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'bundler'
-require 'download'
-require 'fileutils'
-require 'glimmer'
-require 'httparty'
-require 'tty-progressbar'
-
-$LOAD_PATH.unshift(File.expand_path('..', __FILE__))
-
-Glimmer::Config.loop_max_count = 1_000_000
- 
-Glimmer::Config.excluded_keyword_checkers << lambda do |method_symbol, *args|
-  method = method_symbol.to_s
-  result = false
-  result ||= method == 'load_iseq'
-  result ||= method == 'handle'
-  result ||= method == 'begin'
+module Bundler
+  # Represents a download to a gem-relative location
+  # Follows the Command Design Pattern (i.e. #call runs the command)
+  class Download < Struct.new(:uri, :to, keyword_init: true)
+    def initialize(uri, options = {})      
+      super(options.merge(uri: uri))
+    end
+    
+    def call
+      unless to.nil? || to.to_s.strip.empty?
+        directory = File.expand_path(to)
+        FileUtils.mkdir_p(directory)
+      end
+      ::Download.file(uri, to)
+    end    
+  end
 end
-
-
-require 'bundler-download/ext/glimmer/dsl/downloadfile/download_expression'
-require 'bundler-download/ext/download'
