@@ -30,9 +30,16 @@ $LOAD_PATH.unshift(File.expand_path('..', __FILE__))
 require 'bundler-download/ext/download'
 require 'bundler/downloadfile'
 
-Bundler::Plugin.add_hook('after-install-all') do |dependencies|
-  Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).each do |downloadfile|
-    Bundler::Downloadfile.new(File.read(downloadfile), gem_path: File.dirname(downloadfile)).call
+Bundler::Plugin.add_hook(Bundler::Plugin::Events::GEM_AFTER_INSTALL_ALL) do |dependencies|
+  begin
+    puts 'bundle-download plugin gem-after-install-all hook:'
+    Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).each do |downloadfile|
+      puts "Processing #{downloadfile}"
+      Bundler::Downloadfile.new(File.read(downloadfile), gem_path: File.dirname(downloadfile)).call
+    end
+    true
+  rescue => e
+    puts e.full_message
+    false
   end
-  true
 end

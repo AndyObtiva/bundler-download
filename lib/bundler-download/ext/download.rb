@@ -27,7 +27,7 @@ module Download
     
     def start(hash={})
       set_multi(hash)
-      File.delete(file_path) if File.exist?(file_path)
+      return puts("Download '#{file_path}' already exists!") if File.exist?(file_path)
       
       head_response = HTTParty.head(url)
       uri = head_response.request.uri
