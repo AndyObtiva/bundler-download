@@ -1,7 +1,7 @@
 # bundler-download - Bundler Plugin
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
-Bundler plugin for auto-downloading specified extra files via [`Downloadfile`](#downloadfile) after `bundle install`.
+Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`.
 
 ## How It Works
 
@@ -13,10 +13,10 @@ If a Ruby Gem needs to depend on one of those gems, it can declare as a standard
 
 ## Gem Instructions
 
-Add `bundler-download` as a standard .gemspec dependency:
+Add `bundler-download` as a standard .gemspec dependency (and mention in its [instructions](#app-instructions) that apps must add `plugin bundler-download` in "Gemfile" to use):
 
 ```ruby
-s.add_dependency('bundler', [">= 2.1.4"])
+s.add_dependency('bundler-download', [">= 2.1.4"])
 ```
 
 Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem that needs extra downloads, mentioning under .gemspec `files`:
@@ -45,17 +45,16 @@ download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.ma
 
 ## App Instructions
 
-Apps can depend on a gem with `Downloadfile` by adding `bundler-download` plugin and including the gem in `Gemfile` like it normally would:
+An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first and then including the gem in `Gemfile` like it normally would:
 
 ```
 plugin 'bundler-download'
 gem 'some_gem_with_downloadfile'
 ```
 
-Afterwards, run `bundle install` twice (the first time it installs the plugin and the second time it activates it):
+Afterwards, run `bundle install` (run one extra time if you don't have the `bundler-download` plugin installed yet since the first run would just install the plugin but not activte till subsequent runs):
 
 ```
-bundle install
 bundle install
 ```
 
@@ -94,7 +93,7 @@ Subsequent runs of `bundle install` will keep existing downloads without overwri
 
 ### Bundler Download Command
 
-If you would like to redownload file from gem [`Downloadfile's`](#downloadfile) again, overwriting existing downloads, simply run:
+If you would like to redownload files for all gems again, overwriting existing downloads, simply run:
 
 `bundle download`
 
