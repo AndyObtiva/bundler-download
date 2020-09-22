@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
-gem 'bundler'
+gem 'bundler', '>= 2.0.0'
 gem 'httparty', "~> 0.18.1"
 gem 'download', "~> 1.1.0"
 gem 'tty-progressbar', "~> 0.17.0"

@@ -114,7 +114,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler
+  bundler (>= 2.0.0)
   download (~> 1.1.0)
   httparty (~> 0.18.1)
   jeweler (>= 2.3.5)

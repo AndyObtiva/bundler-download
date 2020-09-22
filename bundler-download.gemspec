@@ -11,19 +11,25 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-09-21"
+  s.date = "2020-09-22"
   s.description = "Bundler plugin for auto-downloading specified extra files after gem install".freeze
   s.email = "andy.am@gmail.com".freeze
+  s.executables = ["bundler-download".freeze]
   s.extra_rdoc_files = [
+    "CHANGELOG.md",
     "LICENSE.txt",
     "README.md"
   ]
   s.files = [
+    "CHANGELOG.md",
     "LICENSE.txt",
     "README.md",
     "VERSION",
+    "bin/bundler-download",
+    "bundler-download.gemspec",
     "lib/bundler-download.rb",
     "lib/bundler-download/ext/download.rb",
+    "lib/bundler/download.rb",
     "lib/bundler/downloadfile.rb",
     "plugins.rb"
   ]
@@ -37,7 +43,7 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<bundler>.freeze, [">= 0"])
+    s.add_runtime_dependency(%q<bundler>.freeze, [">= 2.0.0"])
     s.add_runtime_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
     s.add_runtime_dependency(%q<download>.freeze, ["~> 1.1.0"])
     s.add_runtime_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
@@ -49,7 +55,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<pessimize>.freeze, [">= 0"])
     s.add_development_dependency(%q<rake-tui>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<bundler>.freeze, [">= 0"])
+    s.add_dependency(%q<bundler>.freeze, [">= 2.0.0"])
     s.add_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
     s.add_dependency(%q<download>.freeze, ["~> 1.1.0"])
     s.add_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
