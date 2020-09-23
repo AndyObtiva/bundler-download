@@ -8,6 +8,7 @@
 - `bundle download --all-operating-systems` to download files for all OS'es
 - `bundle download help` to show instructions (with `usage` as an alias)
 - `bundle download list` lists downloads for every gem with a Downloadfile
+- `bundle download show` shows downloaded files for every gem with size stats
 
 ## 1.0.0
 

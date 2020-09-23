@@ -33,11 +33,12 @@ module Bundler
         bundle download clear  # Clear downloads by deleting them under all gems
         bundle download clean  # (alias for clear)
         bundle download list   # List downloads by printing Downloadfile content for all gems
+        bundle download show   # Show downloaded files for all gems
     MULTI_LINE_STRING
 
     SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]    
     PLATFORM_OS = SUPPORTED_OPERATING_SYSTEMS.detect {|os| OS.send("#{os}?")}
-    SUBCOMMANDS = %w[start clear clean help usage list]
+    SUBCOMMANDS = %w[start clear clean help usage list show]
     
     def initialize(file, gem_path:, keep_existing: nil, all_operating_systems: nil)
       @file = file
@@ -85,6 +86,14 @@ module Bundler
     def list
       puts "Listing #{file}"
       puts @file_content
+    end
+    
+    def show
+      puts "Showing downloaded files for #{file}"
+      @downloads.each do |download|
+        file = download.file_path
+        puts "#{File.size(file)} #{file}" if File.exist?(file)
+      end
     end
   end
 end
