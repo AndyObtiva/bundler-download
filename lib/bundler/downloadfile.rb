@@ -21,14 +21,27 @@
 
 module Bundler
   class Downloadfile    
-    attr_reader :file_content, :gem_path, :keep_existing
+    attr_reader :file, :file_content, :gem_path, :keep_existing
     
+    HELP = <<~MULTI_LINE_STRING
+      == bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} ==
+      Commands/Subcommands:
+        bundle download help   # Provide help by printing usage instructions
+        bundle download usage  # (alias for help)
+        bundle download start  # Start download
+        bundle download        # (alias for start)
+        bundle download clear  # Clear downloads by deleting them under all gems
+        bundle download clean  # (alias for clear)
+        bundle download list   # List downloads by printing Downloadfile content for all gems
+    MULTI_LINE_STRING
+
     SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]    
     PLATFORM_OS = SUPPORTED_OPERATING_SYSTEMS.detect {|os| OS.send("#{os}?")}
-    SUBCOMMANDS = %w[start clear clean help usage]
+    SUBCOMMANDS = %w[start clear clean help usage list]
     
-    def initialize(file_content, gem_path:, keep_existing: nil, all_operating_systems: nil)
-      @file_content = file_content
+    def initialize(file, gem_path:, keep_existing: nil, all_operating_systems: nil)
+      @file = file
+      @file_content = File.read(@file)
       @gem_path = gem_path
       @keep_existing = keep_existing
       @all_operating_systems = all_operating_systems
@@ -54,26 +67,24 @@ module Bundler
     end
     
     def start
+      puts "Downloading #{file}"
       @downloads.select {|download| @all_operating_systems || download.os.nil? || download.os == PLATFORM_OS }.each(&:start)
     end
     
     def clear
+      puts "Clearing #{file}"
       @downloads.each(&:delete)
     end
     alias clean clear
     
     def help
-      puts <<~MULTI_LINE_STRING
-        == bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} ==
-        Commands/Subcommands:
-          bundle download help   # Provide help by printing usage instructions
-          bundle download usage  # (alias for help)
-          bundle download start  # Start download
-          bundle download        # (alias for start)
-          bundle download clear  # Clear downloads by deleting them under all gems
-          bundle download clean  # (alias for clear)
-      MULTI_LINE_STRING
+      puts HELP
     end
     alias usage help
+    
+    def list
+      puts "Listing #{file}"
+      puts @file_content
+    end
   end
 end

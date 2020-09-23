@@ -1,6 +1,5 @@
 # TODO
 
-- `bundle download list` lists downloads for every gem with a Downloadfile
 - `bundle download show` shows downloaded files for every gem with size stats
 
 - Support groups (e.g. `:development`) just like Bundler's

@@ -7,6 +7,7 @@
 - Support `os` option for `download` DSL keyword in `Downloadfile`
 - `bundle download --all-operating-systems` to download files for all OS'es
 - `bundle download help` to show instructions (with `usage` as an alias)
+- `bundle download list` lists downloads for every gem with a Downloadfile
 
 ## 1.0.0
 

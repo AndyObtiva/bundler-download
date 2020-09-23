@@ -30,9 +30,8 @@ module Bundler
         downloadfiles = Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).to_a
         puts 'No gems were found with Downloadfile.' if downloadfiles.empty?
         downloadfiles.each do |downloadfile|
-          puts "Processing #{downloadfile}"
           bundler_downloadfile = Bundler::Downloadfile.new(
-            File.read(downloadfile), 
+            downloadfile, 
             gem_path: File.dirname(downloadfile), 
             keep_existing: args.include?('--keep-existing'),
             all_operating_systems: args.include?('--all-operating-systems'),
