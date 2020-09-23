@@ -26,4 +26,3 @@ group :test do
   gem 'bundler-download', path: '.'
   plugin 'bundler-download'
 end
-
