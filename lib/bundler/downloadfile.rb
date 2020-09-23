@@ -25,7 +25,7 @@ module Bundler
     
     SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]    
     PLATFORM_OS = SUPPORTED_OPERATING_SYSTEMS.detect {|os| OS.send("#{os}?")}
-    SUBCOMMANDS = %w[start clear clean]
+    SUBCOMMANDS = %w[start clear clean help usage]
     
     def initialize(file_content, gem_path:, keep_existing: nil, all_operating_systems: nil)
       @file_content = file_content
@@ -61,5 +61,19 @@ module Bundler
       @downloads.each(&:delete)
     end
     alias clean clear
+    
+    def help
+      puts <<~MULTI_LINE_STRING
+        == bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} ==
+        Commands/Subcommands:
+          bundle download help   # Provide help by printing usage instructions
+          bundle download usage  # (alias for help)
+          bundle download start  # Start download
+          bundle download        # (alias for start)
+          bundle download clear  # Clear downloads by deleting them under all gems
+          bundle download clean  # (alias for clear)
+      MULTI_LINE_STRING
+    end
+    alias usage help
   end
 end
