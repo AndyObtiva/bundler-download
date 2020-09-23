@@ -25,6 +25,16 @@ module Download
   class Object
     DOWNLOAD_CHUNK_SIZE = 1_048_576
     
+    def os
+      options.to_h[:os]
+    end
+        
+    def delete(hash={})
+      set_multi(hash)
+
+      File.delete(file_path) if File.exist?(file_path)      
+    end
+    
     def start(hash={})
       set_multi(hash)
       return puts("Download '#{file_path}' already exists! (run `bundle download` to redownload)") if options.keys.include?('--keep_existing') && File.exist?(file_path)

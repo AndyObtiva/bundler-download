@@ -23,6 +23,7 @@ require 'bundler'
 require 'download'
 require 'fileutils'
 require 'httparty'
+require 'os'
 require 'tty-progressbar'
 
 $LOAD_PATH.unshift(File.expand_path('..', __FILE__))
