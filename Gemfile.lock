@@ -2,10 +2,11 @@ PATH
   remote: .
   specs:
     bundler-download (1.1.0)
-      bundler (>= 2.0.0)
-      download (~> 1.1.0)
-      httparty (~> 0.18.1)
-      tty-progressbar (~> 0.17.0)
+      bundler (>= 2.0.0, < 3.0.0)
+      download (>= 1.1.0, < 2.0.0)
+      httparty (>= 0.18.1, < 2.0.0)
+      os (>= 1.1.1, < 2.0.0)
+      tty-progressbar (>= 0.17.0, < 2.0.0)
 
 GEM
   remote: https://rubygems.org/

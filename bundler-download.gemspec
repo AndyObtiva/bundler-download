@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
   s.date = "2020-09-23"
-  s.description = "Bundler plugin for auto-downloading specified extra files after gem install".freeze
+  s.description = "bundler-download is a Bundler plugin for auto-downloading gem-specified extra files (e.g. large file downloads) on `bundle install` from a `Downloadfile`".freeze
   s.email = "andy.am@gmail.com".freeze
   s.executables = ["bundler-download".freeze]
   s.extra_rdoc_files = [
@@ -35,33 +35,33 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/AndyObtiva/bundler-download".freeze
   s.licenses = ["MIT".freeze]
-  s.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nOn the next `bundle install`, extra gem files will be downloaded automatically.".freeze
+  s.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! Follow the instructions below to download their files. \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nAfterwards, run `bundle install` and extra gem files will be downloaded automatically.".freeze
   s.rubygems_version = "3.1.4".freeze
-  s.summary = "Bundler plugin for auto-downloading specified extra files after gem install".freeze
+  s.summary = "bundler-download is a Bundler plugin for auto-downloading specified extra files on `bundle install`".freeze
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<bundler>.freeze, [">= 2.0.0"])
-    s.add_runtime_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
-    s.add_runtime_dependency(%q<download>.freeze, ["~> 1.1.0"])
-    s.add_runtime_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
+    s.add_runtime_dependency(%q<bundler>.freeze, [">= 2.0.0", "< 3.0.0"])
+    s.add_runtime_dependency(%q<download>.freeze, [">= 1.1.0", "< 2.0.0"])
+    s.add_runtime_dependency(%q<httparty>.freeze, [">= 0.18.1", "< 2.0.0"])
+    s.add_runtime_dependency(%q<os>.freeze, [">= 1.1.1", "< 2.0.0"])
+    s.add_runtime_dependency(%q<tty-progressbar>.freeze, [">= 0.17.0", "< 2.0.0"])
     s.add_development_dependency(%q<rspec>.freeze, ["~> 3.5.0"])
-    s.add_development_dependency(%q<rdoc>.freeze, ["~> 3.12"])
     s.add_development_dependency(%q<jeweler>.freeze, [">= 2.3.5"])
     s.add_development_dependency(%q<simplecov>.freeze, [">= 0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, [">= 0"])
     s.add_development_dependency(%q<pessimize>.freeze, [">= 0"])
     s.add_development_dependency(%q<rake-tui>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<bundler>.freeze, [">= 2.0.0"])
-    s.add_dependency(%q<httparty>.freeze, ["~> 0.18.1"])
-    s.add_dependency(%q<download>.freeze, ["~> 1.1.0"])
-    s.add_dependency(%q<tty-progressbar>.freeze, ["~> 0.17.0"])
+    s.add_dependency(%q<bundler>.freeze, [">= 2.0.0", "< 3.0.0"])
+    s.add_dependency(%q<download>.freeze, [">= 1.1.0", "< 2.0.0"])
+    s.add_dependency(%q<httparty>.freeze, [">= 0.18.1", "< 2.0.0"])
+    s.add_dependency(%q<os>.freeze, [">= 1.1.1", "< 2.0.0"])
+    s.add_dependency(%q<tty-progressbar>.freeze, [">= 0.17.0", "< 2.0.0"])
     s.add_dependency(%q<rspec>.freeze, ["~> 3.5.0"])
-    s.add_dependency(%q<rdoc>.freeze, ["~> 3.12"])
     s.add_dependency(%q<jeweler>.freeze, [">= 2.3.5"])
     s.add_dependency(%q<simplecov>.freeze, [">= 0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, [">= 0"])

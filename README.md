@@ -5,21 +5,21 @@ Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) 
 
 ## How It Works
 
-Gems declare the need for extra downloads upon install by Bundler via [`Downloadfile`](#downloadfile).
+Gems can add a [`Downloadfile`](#downloadfile) at the root to declare the need for extra downloads upon install by Bundler.
 
-Apps can simply add those gems to Bundler `Gemfile` the standard way with no change. Afterwards, when running `bundle install`, bundle-download will automatically download extra files at the end.
+Apps can add those gems to Bundler `Gemfile` the standard way in addition to installing the [bundler-download](https://rubygems.org/gems/bundler-download) Bundler plugin. Afterwards, when running `bundle install`, bundle-download will automatically download extra files at the end.
 
 If a Ruby Gem needs to depend on one of those gems, it can declare as a standard dependency in .gemspec
 
 ## Gem Instructions
 
-Add `bundler-download` as a standard .gemspec dependency (and mention in its [instructions](#app-instructions) that apps must add `plugin bundler-download` in "Gemfile" to use):
+Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency (and mention in its [instructions](#app-instructions) that apps must add `plugin bundler-download` in "Gemfile" to get the extra downloads):
 
 ```ruby
-s.add_dependency('bundler-download', [">= 2.1.4"])
+s.add_dependency('bundler-download', [">= 1.1.0"])
 ```
 
-Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem that needs extra downloads, mentioning under .gemspec `files`:
+Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem, including in .gemspec `files`:
 
 ```ruby
     s.files = [
@@ -31,32 +31,39 @@ Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root direct
 
 ### Downloadfile
 
-A gem `Downloadfile` contains download links for files that need to be downloaded relative to the gem directory after install.
+A gem `Downloadfile` contains `download` links for files that need to be downloaded relative to the gem directory after `bundle install`.
 
-Example of `Downloadfile`:
+Example `Downloadfile`:
 
 ```
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.gtk.linux.x86_64_0.4.0.202005172227.jar' # downloads into gem root directory
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar', 
   to: 'cef' # downloads into 'cef' directory under the gem installation directory
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.win32.win32.x86_64_0.4.0.202005172227.jar',
-  to: 'cef/windows' # downloads into 'cef/windows' directory under the gem installation directory
+  to: 'cef/windows', os: 'windows' # downloads into 'cef/windows' directory under the gem installation directory in Windows OS only
 ```
+
+The keyword `download` declares a file to download and takes the following arguments:
+1. Download URL string
+2. `to:` keyword arg: mentions a local download path relative to the gem installation directory (e.g. 'vendor' or 'lib/ai/data'). It automatically creates the path with all its subdirectories if it does not already exist. If left empty, then the file is downloaded to the gem directory root path.
+3. `os:` keyword arg (value: `mac` / `windows` / `linux`): limits the operating system under which the download is made. It is `nil` by default, allowing the download to occur in all operating systems.
 
 ## App Instructions
 
-An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first and then including the gem in `Gemfile` like it normally would:
+An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first (or manually installing via `bundle plugin install bundler-download`) and then including the gem in `Gemfile` like it normally would:
 
 ```
 plugin 'bundler-download'
 gem 'some_gem_with_downloadfile'
 ```
 
-Afterwards, run `bundle install` (run one extra time if you don't have the `bundler-download` plugin installed yet since the first run would just install the plugin but not activte till subsequent runs):
+Afterwards, run:
 
 ```
 bundle install
 ```
+
+(run one extra time if you don't have the `bundler-download` plugin installed yet since the first run would just install the plugin and subsequent runs would activate it)
 
 You should see something like this:
 
@@ -74,7 +81,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.0.0
+Using bundler-download 1.1.0
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -89,17 +96,114 @@ Download path: /Users/User/.rvm/gems/ruby-2.7.1@tmp/gems/glimmer-1.0.0/cef/com.m
 Downloading 26% ( 59s ) [==============                                      ]
 ```
 
-Subsequent runs of `bundle install` will keep existing downloads without overwriting them unless you use the [`bundle-download`](#bundler-download-command) command to manually redownload files again.
+After the initial download of files, running `bundle install` again will keep existing downloads without overwriting them unless you use the [`bundle-download`](#bundler-download-command) command to manually redownload files again.
 
 ### Bundler Download Command
 
 If you would like to redownload files for all gems again, overwriting existing downloads, simply run:
 
-`bundle download`
+```
+bundle download
+```
 
-If you only want to download files if they didn't exist already, you could alternatively run:
+#### Options
 
-`bundle download --keep-existing`
+##### --keep-existing
+
+If you only want to download files if they did not exist already, you could run:
+
+```
+bundle download --keep-existing
+```
+
+Example printout:
+
+```
+Downloading /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
+Download '/Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/vendor/jars/mac/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar' already exists! (run `bundle download` to redownload)
+```
+
+##### --all-operating-systems
+
+If you want to download files for all operating systems (including ones other than the current platform), you could run:
+
+```
+bundle download --all-operating-systems
+```
+
+#### Subcommands
+
+##### help (alias: usage)
+
+Run the `help` subcommand (or usage) to bring up usage instructions:
+
+```
+bundle download help
+``` 
+
+Prints:
+
+```
+== bundler-download - Bundler Plugin - v1.1.0 ==
+Commands/Subcommands:
+  bundle download help   # Provide help by printing usage instructions
+  bundle download usage  # (alias for help)
+  bundle download start  # Start download
+  bundle download        # (alias for start)
+  bundle download clear  # Clear downloads by deleting them under all gems
+  bundle download clean  # (alias for clear)
+  bundle download list   # List downloads by printing Downloadfile content for all gems
+  bundle download show   # Show downloaded files for all gems
+```
+
+##### clear (alias: clean)
+
+Run the `clear` subcommand to clear downloads by deleting them under all gems:
+
+```
+bundle download clear
+``` 
+
+Example printout:
+
+```
+Clearing /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
+```
+
+##### list
+
+Run the `list` subcommand to list downloads by printing Downloadfile content for all gems:
+
+```
+bundle download list
+``` 
+
+Example printout:
+
+```
+Listing /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
+download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.gtk.linux.x86_64_0.4.0.202005172227.jar',
+  to: 'vendor/jars/linux', os: 'linux'
+download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar', 
+  to: 'vendor/jars/mac', os: 'mac'
+download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.win32.win32.x86_64_0.4.0.202005172227.jar',
+  to: 'vendor/jars/windows', os: 'windows'
+```
+
+##### show
+
+Run the `show` subcommand to show downloaded files for all gems:
+
+```
+bundle download show
+``` 
+
+Example printout:
+
+```
+Showing downloaded files for /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
+54070695 /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/vendor/jars/mac/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar
+```
 
 ## Contributing to bundler-download
  

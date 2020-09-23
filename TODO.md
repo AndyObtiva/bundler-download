@@ -1,5 +1,7 @@
 # TODO
 
+You may contribute by implementing one of these TODO items and then submitting via a Pull Request.
+
 - Support groups (e.g. `:development`) just like Bundler's
 - Designate some downloads as optional to avoid auto-installing upon `bundle install` (yet only with `bundle download --optional`)
 - `bundle download gem_name` processes Downloadfile for a specified gem only

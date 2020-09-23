@@ -17,13 +17,13 @@ Jeweler::Tasks.new do |gem|
   gem.name = "bundler-download"
   gem.homepage = "http://github.com/AndyObtiva/bundler-download"
   gem.license = "MIT"
-  gem.summary = %Q{Bundler plugin for auto-downloading specified extra files after gem install}
-  gem.description = %Q{Bundler plugin for auto-downloading specified extra files after gem install}
+  gem.summary = %Q{bundler-download is a Bundler plugin for auto-downloading specified extra files on `bundle install`}
+  gem.description = %Q{bundler-download is a Bundler plugin for auto-downloading gem-specified extra files (e.g. large file downloads) on `bundle install` from a `Downloadfile`}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["AndyMaleh"]
   gem.files = Dir['bundler-download.gemspec', 'README.md', 'LICENSE.txt', 'VERSION', 'CHANGELOG.md', 'plugins.rb', 'lib/**/*', 'bin/**/*']
   gem.executables = ['bundler-download']
-  gem.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nOn the next `bundle install`, extra gem files will be downloaded automatically."
+  gem.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! Follow the instructions below to download their files. \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nAfterwards, run `bundle install` and extra gem files will be downloaded automatically."
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
