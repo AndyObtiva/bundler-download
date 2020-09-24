@@ -35,13 +35,27 @@ module Download
       File.delete(file_path) if File.exist?(file_path)      
     end
     
+    def final_uri_and_head_response
+      location = url
+      head_response = nil
+      begin
+        uri = URI(location)
+        options = {}
+        options.merge!(use_ssl: true) if location.start_with?('https:')
+        head_response = Net::HTTP.start(uri.hostname, uri.port, options) do |http|
+          http.head(uri)
+        end
+        location = head_response['location'] if head_response['location']
+      end while head_response.is_a?(Net::HTTPRedirection)      
+      [uri, head_response]
+    end
+    
     def start(hash={})
       set_multi(hash)
       return puts("Download '#{file_path}' already exists! (run `bundle download` to redownload)") if options.keys.include?('--keep_existing') && File.exist?(file_path)
       
-      head_response = HTTParty.head(url)
-      uri = head_response.request.uri
-      content_length = head_response.headers["content-length"]
+      uri, head_response = final_uri_and_head_response
+      content_length = head_response["content-length"]
       puts "Download URL: #{uri.to_s}"
       puts "Download size: #{content_length}"
       puts "Download path: #{file_path}"

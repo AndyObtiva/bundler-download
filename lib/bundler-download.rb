@@ -20,9 +20,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'bundler'
+require 'bundler/setup'
 require 'download'
 require 'fileutils'
-require 'httparty'
 require 'os'
 require 'tty-progressbar'
 

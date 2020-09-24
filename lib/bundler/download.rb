@@ -27,7 +27,9 @@ module Bundler
       begin
         subcommand = extract_subcommand(args) || 'start'
         return puts("Invalid subcommand: #{subcommand} \nValid `bundle download` subcommands are: #{Bundler::Downloadfile::SUBCOMMANDS.join(' / ')}") unless Bundler::Downloadfile::SUBCOMMANDS.include?(subcommand)
-        downloadfiles = Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).to_a
+        downloadfiles = Dir.glob(File.join(Gem.dir, 'gems', '**', 'Downloadfile')).to_a        
+        loaded_gems = Gem.loaded_specs.keys
+        downloadfiles = downloadfiles.select {|df| loaded_gems.detect {|gem| File.basename(File.dirname(df)).include?(gem)} }
         puts 'No gems were found with Downloadfile.' if downloadfiles.empty?
         downloadfiles.each do |downloadfile|
           bundler_downloadfile = Bundler::Downloadfile.new(

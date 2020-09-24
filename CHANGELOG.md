@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.2.0
+
+- Get rid of httparty
+- Only download files for Gemfile gems
+
 ## 1.1.0
 
 - Add a post install message

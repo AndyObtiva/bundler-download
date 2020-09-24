@@ -11,8 +11,8 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
+require 'juwelier'
+Juwelier::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = "bundler-download"
   gem.homepage = "http://github.com/AndyObtiva/bundler-download"
@@ -26,7 +26,7 @@ Jeweler::Tasks.new do |gem|
   gem.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! Follow the instructions below to download their files. \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nAfterwards, run `bundle install` and extra gem files will be downloaded automatically."
   # dependencies defined in Gemfile
 end
-Jeweler::RubygemsDotOrgTasks.new
+Juwelier::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'

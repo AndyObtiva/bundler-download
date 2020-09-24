@@ -3,6 +3,14 @@
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`.
 
+## Background
+
+The RubyGem ecosystem, famous for gems like Rails for web development, Devise for authentication, and Pundit for authorization, enables productivity via code reuse. As such, it is great for quickly adding libraries to your project to automate part of the work or reuse other people's solutions to solved problems.
+
+That said, you would not want to package extremely large files, like the OpenAI GPT-3 175 billion parameter models, in a RubyGem.
+
+Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with with `bundle install` by declaring gem downloads in a [Downloadfile](#downloadfile)
+
 ## How It Works
 
 Gems can add a [`Downloadfile`](#downloadfile) at the root to declare the need for extra downloads upon install by Bundler.
@@ -13,7 +21,7 @@ If a Ruby Gem needs to depend on one of those gems, it can declare as a standard
 
 ## Gem Instructions
 
-Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency (and mention in its [instructions](#app-instructions) that apps must add `plugin bundler-download` in "Gemfile" to get the extra downloads):
+Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency:
 
 ```ruby
 s.add_dependency('bundler-download', [">= 1.1.0"])
@@ -29,9 +37,19 @@ Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root direct
     ]
 ```
 
+Finally, follow one of two options for having applications obtain downloads:
+1. Advertise that apps must install `bundler-download` as a Bundler plugin as per the [App Bundler Plugin Instructions](#app-bundler-plugin-instructions) below.
+2. Use the [API](#api) to automatically trigger downloads on first use of your gem features.
+
 ### Downloadfile
 
 A gem `Downloadfile` contains `download` links for files that need to be downloaded relative to the gem directory after `bundle install`.
+
+Downloadfile entries follow this format (keyword args are optional):
+
+```
+download url, to: gem_subdirectory, os: os
+```
 
 Example `Downloadfile`:
 
@@ -48,12 +66,13 @@ The keyword `download` declares a file to download and takes the following argum
 2. `to:` keyword arg: mentions a local download path relative to the gem installation directory (e.g. 'vendor' or 'lib/ai/data'). It automatically creates the path with all its subdirectories if it does not already exist. If left empty, then the file is downloaded to the gem directory root path.
 3. `os:` keyword arg (value: `mac` / `windows` / `linux`): limits the operating system under which the download is made. It is `nil` by default, allowing the download to occur in all operating systems.
 
-## App Instructions
+## App Bundler Plugin Instructions
 
 An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first (or manually installing via `bundle plugin install bundler-download`) and then including the gem in `Gemfile` like it normally would:
 
 ```
 plugin 'bundler-download'
+
 gem 'some_gem_with_downloadfile'
 ```
 
@@ -203,6 +222,18 @@ Example printout:
 ```
 Showing downloaded files for /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
 54070695 /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/vendor/jars/mac/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar
+```
+
+### API
+
+Apps may choose to integrate with the [bundler-download](https://rubygems.org/gems/bundler-download) gem directly to trigger downloads instead of relying on the plugin.
+This can be useful when wanting to trigger downloads only on first use while staying transparent should the gem features not be used.
+
+To do so, simply include this Ruby code to trigger downloads:
+
+```ruby
+require 'bundler-download'
+Bundler::Download.new.exec('download', [])
 ```
 
 ## Contributing to bundler-download
