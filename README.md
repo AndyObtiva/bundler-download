@@ -1,4 +1,4 @@
-# bundler-download - Bundler Plugin
+# bundler-download - Bundler Plugin - v1.2.0
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`.
@@ -24,7 +24,7 @@ If a Ruby Gem needs to depend on one of those gems, it can declare as a standard
 Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency:
 
 ```ruby
-s.add_dependency('bundler-download', [">= 1.1.0"])
+s.add_dependency('bundler-download', ["~> 1.2"])
 ```
 
 Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem, including in .gemspec `files`:
@@ -100,7 +100,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.1.0
+Using bundler-download 1.2.0
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -163,7 +163,7 @@ bundle download help
 Prints:
 
 ```
-== bundler-download - Bundler Plugin - v1.1.0 ==
+== bundler-download - Bundler Plugin - v1.2.0 ==
 Commands/Subcommands:
   bundle download help   # Provide help by printing usage instructions
   bundle download usage  # (alias for help)
