@@ -20,7 +20,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'bundler'
-require 'bundler/setup'
+if ENV['BUNDLER_DOWNLOAD_PLUGIN'].to_s.downcase == 'true'
+  require 'bundler/setup'
+else
+  Bundler.setup(:default)
+end
 require 'download'
 require 'fileutils'
 require 'os'

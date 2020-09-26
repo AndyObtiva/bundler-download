@@ -1,4 +1,4 @@
-# bundler-download - Bundler Plugin - v1.2.0
+# bundler-download - Bundler Plugin - v1.3.0
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`.
@@ -24,7 +24,7 @@ If a Ruby Gem needs to depend on one of those gems, it can declare as a standard
 Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency:
 
 ```ruby
-s.add_dependency('bundler-download', ["~> 1.2"])
+s.add_dependency('bundler-download', ["~> 1.3"])
 ```
 
 Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem, including in .gemspec `files`:
@@ -68,6 +68,8 @@ The keyword `download` declares a file to download and takes the following argum
 
 ## App Bundler Plugin Instructions
 
+In plugin mode, all gems declared in Gemfile are inspected for presence of Downloadfile regardless of what group they belong to.
+
 An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first (or manually installing via `bundle plugin install bundler-download`) and then including the gem in `Gemfile` like it normally would:
 
 ```
@@ -100,7 +102,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.2.0
+Using bundler-download 1.3.0
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -163,7 +165,7 @@ bundle download help
 Prints:
 
 ```
-== bundler-download - Bundler Plugin - v1.2.0 ==
+== bundler-download - Bundler Plugin - v1.3.0 ==
 Commands/Subcommands:
   bundle download help   # Provide help by printing usage instructions
   bundle download usage  # (alias for help)
@@ -225,6 +227,8 @@ Showing downloaded files for /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/g
 ```
 
 ### API
+
+In API mode, only gems belonging to the default group in Gemfile are inspected for presence of Downloadfile by default. An app may change that though by loading other Bundler groups (e.g. `Bundler.setup(:default, :developemnt)`)
 
 Apps may choose to integrate with the [bundler-download](https://rubygems.org/gems/bundler-download) gem directly to trigger downloads instead of relying on the plugin.
 This can be useful when wanting to trigger downloads only on first use while staying transparent should the gem features not be used.

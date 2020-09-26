@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.3.0
+
+- Only `Bundler.setup(:default)` when using as an API to avoid loading :development/:test group gems into a production app 
+
 ## 1.2.0
 
 - Get rid of httparty
