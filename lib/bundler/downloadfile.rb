@@ -89,11 +89,32 @@ module Bundler
     end
     
     def show
+      puts '* * *'
       puts "Showing downloaded files for #{file}"
+      puts '* * *'
+      missing_downloads = false
+      missing_downloads_for_current_platform_os = false
       @downloads.each do |download|
-        file = download.file_path
-        puts "#{File.size(file)} #{file}" if File.exist?(file)
+        download_file_entry = download.file_path
+        if File.exist?(download_file_entry)
+          puts "Downloaded: #{File.size(download_file_entry)} #{download_file_entry}"
+        else
+          missing_downloads = true
+          require 'pd'
+          pd download.os
+          pd PLATFORM_OS
+          missing_downloads_for_current_platform_os = true if download.os == PLATFORM_OS
+          puts "Not downloaded: #{download_file_entry}"
+        end
       end
+      message = ''
+      if missing_downloads_for_current_platform_os      
+        message += "Run `bundle download` to download missing files for current operating system (#{PLATFORM_OS})."
+      else
+        message += "All downloads are present for current operating system (#{PLATFORM_OS})."
+      end
+      puts "Optionally, run `bundle download --all-operating-systems` to download missing files." if missing_downloads
+      puts
     end
   end
 end
