@@ -24,16 +24,17 @@ module Bundler
     attr_reader :file, :file_content, :gem_path, :keep_existing
     
     HELP = <<~MULTI_LINE_STRING
-      == bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} ==
-      Commands/Subcommands:
-        bundle download help   # Provide help by printing usage instructions
-        bundle download usage  # (alias for help)
-        bundle download start  # Start download
-        bundle download        # (alias for start)
-        bundle download clear  # Clear downloads by deleting them under all gems
-        bundle download clean  # (alias for clear)
-        bundle download list   # List downloads by printing Downloadfile content for all gems
-        bundle download show   # Show downloaded files for all gems
+      Commands/Subcommands/Options:
+        bundle download help                     # Provide help by printing usage instructions
+        bundle download usage                    # (alias for help)
+        bundle download start                    # Start downloads for current operating system
+        bundle download                          # (alias for start)
+        bundle download --all-operating-systems  # Download files for all operating systems
+        bundle download --keep-existing          # Do not redownload already downloaded files
+        bundle download clear                    # Clear downloads by deleting them under all gems
+        bundle download clean                    # (alias for clear)
+        bundle download list                     # List downloads by printing Downloadfile content for all gems
+        bundle download show                     # Show downloaded files for all gems
     MULTI_LINE_STRING
 
     SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]    
@@ -89,9 +90,8 @@ module Bundler
     end
     
     def show
-      puts '* * *'
       puts "Showing downloaded files for #{file}"
-      puts '* * *'
+      puts '- - -'
       missing_downloads = false
       missing_downloads_for_current_platform_os = false
       @downloads.each do |download|
@@ -100,20 +100,18 @@ module Bundler
           puts "Downloaded: #{File.size(download_file_entry)} #{download_file_entry}"
         else
           missing_downloads = true
-          require 'pd'
-          pd download.os
-          pd PLATFORM_OS
           missing_downloads_for_current_platform_os = true if download.os == PLATFORM_OS
           puts "Not downloaded: #{download_file_entry}"
         end
       end
       message = ''
       if missing_downloads_for_current_platform_os      
-        message += "Run `bundle download` to download missing files for current operating system (#{PLATFORM_OS})."
+        message += "Downloads are missing for the current operating system (#{PLATFORM_OS}). \nRun `bundle download` to download missing files for current operating system (#{PLATFORM_OS}).\n"
       else
         message += "All downloads are present for current operating system (#{PLATFORM_OS})."
+        message += " Optionally, run `bundle download --all-operating-systems` to download files for all operating systems.\n" if missing_downloads
       end
-      puts "Optionally, run `bundle download --all-operating-systems` to download missing files." if missing_downloads
+      puts message
       puts
     end
   end

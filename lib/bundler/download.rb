@@ -38,6 +38,8 @@ module Bundler
             keep_existing: args.include?('--keep-existing'),
             all_operating_systems: args.include?('--all-operating-systems'),
           )
+          puts "== bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} =="
+          puts
           bundler_downloadfile.send(subcommand)
         end
         true

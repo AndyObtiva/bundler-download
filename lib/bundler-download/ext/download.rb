@@ -52,7 +52,7 @@ module Download
     
     def start(hash={})
       set_multi(hash)
-      return puts("Download '#{file_path}' already exists! (run `bundle download` to redownload)") if options.keys.include?('--keep_existing') && File.exist?(file_path)
+      return puts("Download already exists: '#{file_path}' (run `bundle download` to redownload)") if options.keys.include?('--keep_existing') && File.exist?(file_path)
       
       uri, head_response = final_uri_and_head_response
       content_length = head_response["content-length"]

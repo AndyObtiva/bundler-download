@@ -1,7 +1,7 @@
 # bundler-download - Bundler Plugin - v1.3.0
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
-Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`.
+Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`
 
 ## Background
 
@@ -166,15 +166,18 @@ Prints:
 
 ```
 == bundler-download - Bundler Plugin - v1.3.0 ==
-Commands/Subcommands:
-  bundle download help   # Provide help by printing usage instructions
-  bundle download usage  # (alias for help)
-  bundle download start  # Start download
-  bundle download        # (alias for start)
-  bundle download clear  # Clear downloads by deleting them under all gems
-  bundle download clean  # (alias for clear)
-  bundle download list   # List downloads by printing Downloadfile content for all gems
-  bundle download show   # Show downloaded files for all gems
+
+Commands/Subcommands/Options:
+  bundle download help                     # Provide help by printing usage instructions
+  bundle download usage                    # (alias for help)
+  bundle download start                    # Start downloads for current operating system
+  bundle download                          # (alias for start)
+  bundle download --all-operating-systems  # Download files for all operating systems
+  bundle download --keep-existing          # Do not redownload already downloaded files
+  bundle download clear                    # Clear downloads by deleting them under all gems
+  bundle download clean                    # (alias for clear)
+  bundle download list                     # List downloads by printing Downloadfile content for all gems
+  bundle download show                     # Show downloaded files for all gems
 ```
 
 ##### clear (alias: clean)
@@ -238,6 +241,13 @@ To do so, simply include this Ruby code to trigger downloads:
 ```ruby
 require 'bundler-download'
 Bundler::Download.new.exec('download', [])
+```
+
+You can also use the `--keep-existing` option to avoid redownload if files were there already:
+
+```ruby
+require 'bundler-download'
+Bundler::Download.new.exec('download', ['--keep-existing'])
 ```
 
 ## Contributing to bundler-download
