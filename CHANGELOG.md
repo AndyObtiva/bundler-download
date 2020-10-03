@@ -1,8 +1,12 @@
 # Change Log
 
+## 1.3.1
+
+- Improve instructions to help ensure correct and successful usage
+
 ## 1.3.0
 
-- Setup Bundler default group only when using as an API to avoid loading :development/:test group gems into a production app 
+- Setup Bundler default group only when using as an API to avoid loading :development/:test group gems into a production app
 - Announce that download files are missing for `bundler download show` when a Downloadfile exists but downloads have not been made
 - Document options (e.g. --keep-existing and --all-operating-systems) in `bundle download help`
 

@@ -23,7 +23,7 @@ Juwelier::Tasks.new do |gem|
   gem.authors = ["AndyMaleh"]
   gem.files = Dir['bundler-download.gemspec', 'README.md', 'LICENSE.txt', 'VERSION', 'CHANGELOG.md', 'plugins.rb', 'lib/**/*', 'bin/**/*']
   gem.executables = ['bundler-download']
-  gem.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! Follow the instructions below to download their files. \nAdd `plugin 'bundler-download'` to Gemfile and run `bundle install` \nor alternatively just run `bundle plugin install bundler-download`. \nAfterwards, run `bundle install` and extra gem files will be downloaded automatically."
+  gem.post_install_message = "*** bundler-download post install message ***\nSome gems have a Downloadfile! Follow the instructions below to download their files. \nAdd `plugin 'bundler-download'` above all gems in Gemfile and run `bundle` twice (bundler-download is activated the second time to download extra files) \nor alternatively just run `bundle plugin install bundler-download`. \nAfterwards, run `bundle` and extra files are downloaded automatically.\nTo force download of extra files with bundler-download plugin, run `bundle download`\nTo get help with bundler-download plugin, run `bundle download help`\nLearn more at: https://www.rubydoc.info/gems/bundler-download"
   # dependencies defined in Gemfile
 end
 Juwelier::RubygemsDotOrgTasks.new

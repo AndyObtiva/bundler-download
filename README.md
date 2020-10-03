@@ -1,4 +1,4 @@
-# bundler-download - Bundler Plugin - v1.3.0
+# bundler-download - Bundler Plugin - v1.3.1
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`
@@ -9,7 +9,7 @@ The RubyGem ecosystem, famous for gems like Rails for web development, Devise fo
 
 That said, you would not want to package extremely large files, like the OpenAI GPT-3 175 billion parameter models, in a RubyGem.
 
-Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with with `bundle install` by declaring gem downloads in a [Downloadfile](#downloadfile)
+Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with `bundle install` by declaring gem downloads in a [Downloadfile](#downloadfile)
 
 ## How It Works
 
@@ -55,7 +55,7 @@ Example `Downloadfile`:
 
 ```
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.gtk.linux.x86_64_0.4.0.202005172227.jar' # downloads into gem root directory
-download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar', 
+download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar',
   to: 'cef' # downloads into 'cef' directory under the gem installation directory
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.win32.win32.x86_64_0.4.0.202005172227.jar',
   to: 'cef/windows', os: 'windows' # downloads into 'cef/windows' directory under the gem installation directory in Windows OS only
@@ -102,7 +102,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.3.0
+Using bundler-download 1.3.1
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -160,12 +160,12 @@ Run the `help` subcommand (or usage) to bring up usage instructions:
 
 ```
 bundle download help
-``` 
+```
 
 Prints:
 
 ```
-== bundler-download - Bundler Plugin - v1.3.0 ==
+== bundler-download - Bundler Plugin - v1.3.1 ==
 
 Commands/Subcommands/Options:
   bundle download help                     # Provide help by printing usage instructions
@@ -186,7 +186,7 @@ Run the `clear` subcommand to clear downloads by deleting them under all gems:
 
 ```
 bundle download clear
-``` 
+```
 
 Example printout:
 
@@ -200,7 +200,7 @@ Run the `list` subcommand to list downloads by printing Downloadfile content for
 
 ```
 bundle download list
-``` 
+```
 
 Example printout:
 
@@ -208,7 +208,7 @@ Example printout:
 Listing /Users/User/.rvm/gems/ruby-2.7.1@bundler-download/gems/glimmer-cw-browser-chromium-1.0.0/Downloadfile
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.gtk.linux.x86_64_0.4.0.202005172227.jar',
   to: 'vendor/jars/linux', os: 'linux'
-download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar', 
+download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.cocoa.macosx.x86_64_0.4.0.202005172227.jar',
   to: 'vendor/jars/mac', os: 'mac'
 download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.make.chromium.cef.win32.win32.x86_64_0.4.0.202005172227.jar',
   to: 'vendor/jars/windows', os: 'windows'
@@ -220,7 +220,7 @@ Run the `show` subcommand to show downloaded files for all gems:
 
 ```
 bundle download show
-``` 
+```
 
 Example printout:
 
