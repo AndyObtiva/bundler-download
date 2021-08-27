@@ -1,33 +1,33 @@
-# bundler-download - Bundler Plugin - v1.3.2
+# bundler-download - Bundler Plugin - v1.4.0
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`
 
 ## Background
 
-The RubyGem ecosystem, famous for gems like Rails for web development, Devise for authentication, and Pundit for authorization, enables productivity via code reuse. As such, it is great for quickly adding libraries to your project to automate part of the work or reuse other people's solutions to solved problems.
+The Ruby Gem ecosystem, famous for gems like Rails for web development, Devise for authentication, and Pundit for authorization, enables productivity via code reuse. As such, it is great for quickly adding libraries to your project to automate part of the work or reuse other people's solutions to solved problems.
 
-That said, you would not want to package extremely large files, like the OpenAI GPT-3 175 billion parameter models, in a RubyGem.
+That said, you would not want to package extremely large files, like the OpenAI GPT-3 175 billion parameter models, in a Ruby Gem.
 
-Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with `bundle install` by declaring gem downloads in a [Downloadfile](#downloadfile)
+Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with `bundle` by declaring gem downloads in a [Downloadfile](#downloadfile)
 
 ## How It Works
 
-Gems can add a [`Downloadfile`](#downloadfile) at the root to declare the need for extra downloads upon install by Bundler.
+Apps and gems can add a [`Downloadfile`](#downloadfile) at the root to declare the need for extra downloads upon install by Bundler.
 
-Apps can add those gems to Bundler `Gemfile` the standard way in addition to installing the [bundler-download](https://rubygems.org/gems/bundler-download) Bundler plugin. Afterwards, when running `bundle install`, bundle-download will automatically download extra files at the end.
+Apps can then `bundle` in addition to installing the [bundler-download](https://rubygems.org/gems/bundler-download) Bundler plugin as per instructions below. Afterwards, when running `bundle` again, bundle-download will automatically download extra files mentioned in [Downloadfile](#downloadfile), whether it is in the app directly or in a gem dependency.
 
-If a Ruby Gem needs to depend on one of those gems, it can declare as a standard dependency in .gemspec
+If a Ruby Gem needs to depend on gems that have a [Downloadfile](#downloadfile), it can declare dependency in `.gemspec` just as usual.
 
 ## Gem Instructions
 
-Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard .gemspec dependency:
+Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard `.gemspec` dependency:
 
 ```ruby
-s.add_dependency('bundler-download', ["~> 1.3"])
+s.add_dependency('bundler-download', ["~> 1.4"])
 ```
 
-Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem, including in .gemspec `files`:
+Afterwards, ensure there is a [`Downloadfile`](#downloadfile) at the root directory of the gem, including in `.gemspec` `files`:
 
 ```ruby
     s.files = [
@@ -43,7 +43,7 @@ Finally, follow one of two options for having applications obtain downloads:
 
 ### Downloadfile
 
-A gem `Downloadfile` contains `download` links for files that need to be downloaded relative to the gem directory after `bundle install`.
+An app or gem `Downloadfile` contains `download` links for files that need to be downloaded relative to the gem directory after `bundle install`.
 
 Downloadfile entries follow this format (keyword args are optional):
 
@@ -70,7 +70,11 @@ The keyword `download` declares a file to download and takes the following argum
 
 In plugin mode, all gems declared in `Gemfile` are inspected for presence of `Downloadfile` regardless of what group they belong to.
 
-An app can depend on a gem that has a `Downloadfile` by including in `Gemfile` and running:
+Additionally, the app '.' path is insepected for `Downloadfile` at the root of the app.
+
+An app can depend on a gem that has a `Downloadfile` by including in `Gemfile`
+
+Whether `Downloadfile` lives in app directly or one of its gems, start by running `bundle` in the app root directory:
 
 ```
 bundle
@@ -104,7 +108,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.3.2
+Using bundler-download 1.4.0
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -167,7 +171,7 @@ bundle download help
 Prints:
 
 ```
-== bundler-download - Bundler Plugin - v1.3.2 ==
+== bundler-download - Bundler Plugin - v1.4.0 ==
 
 Commands/Subcommands/Options:
   bundle download help                     # Provide help by printing usage instructions
