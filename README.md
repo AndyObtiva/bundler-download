@@ -19,6 +19,10 @@ Apps can then `bundle` in addition to installing the [bundler-download](https://
 
 If a Ruby Gem needs to depend on gems that have a [Downloadfile](#downloadfile), it can declare dependency in `.gemspec` just as usual.
 
+## App Instructions
+
+App must declare a [`Downloadfile`](#downloadfile) at the root `'.'` path and then follow [App Bundler Plugin Instructions](#app-bundler-plugin-instructions)
+
 ## Gem Instructions
 
 Add [bundler-download](https://rubygems.org/gems/bundler-download) as a standard `.gemspec` dependency:
@@ -70,7 +74,7 @@ The keyword `download` declares a file to download and takes the following argum
 
 In plugin mode, all gems declared in `Gemfile` are inspected for presence of `Downloadfile` regardless of what group they belong to.
 
-Additionally, the app '.' path is insepected for `Downloadfile` at the root of the app.
+Additionally, the app `'.'` path is insepected for `Downloadfile` at the root of the app.
 
 An app can depend on a gem that has a `Downloadfile` by including in `Gemfile`
 

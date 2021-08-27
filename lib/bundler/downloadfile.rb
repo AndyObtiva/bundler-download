@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 module Bundler
-  class Downloadfile    
+  class Downloadfile
     attr_reader :file, :file_content, :gem_path, :keep_existing
     
     HELP = <<~MULTI_LINE_STRING
@@ -31,13 +31,13 @@ module Bundler
         bundle download                          # (alias for start)
         bundle download --all-operating-systems  # Download files for all operating systems
         bundle download --keep-existing          # Do not redownload already downloaded files
-        bundle download clear                    # Clear downloads by deleting them under all gems
+        bundle download clear                    # Clear downloads by deleting them under app/gems
         bundle download clean                    # (alias for clear)
-        bundle download list                     # List downloads by printing Downloadfile content for all gems
-        bundle download show                     # Show downloaded files for all gems
+        bundle download list                     # List downloads by printing Downloadfile content for app/gems
+        bundle download show                     # Show downloaded files for app/gems
     MULTI_LINE_STRING
 
-    SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]    
+    SUPPORTED_OPERATING_SYSTEMS = %w[mac windows linux]
     PLATFORM_OS = SUPPORTED_OPERATING_SYSTEMS.detect {|os| OS.send("#{os}?")}
     SUBCOMMANDS = %w[start clear clean help usage list show]
     
@@ -105,7 +105,7 @@ module Bundler
         end
       end
       message = ''
-      if missing_downloads_for_current_platform_os      
+      if missing_downloads_for_current_platform_os
         message += "Downloads are missing for the current operating system (#{PLATFORM_OS}). \nRun `bundle download` to download missing files for current operating system (#{PLATFORM_OS}).\n"
       else
         message += "All downloads are present for current operating system (#{PLATFORM_OS})."

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.0
+
+- Support `Downloadfile` at the root of the app (not just gems)
+
 ## 1.3.1
 
 - Improve instructions to help ensure correct and successful usage

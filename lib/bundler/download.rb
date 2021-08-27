@@ -32,6 +32,8 @@ module Bundler
         downloadfiles = downloadfiles.select {|df| loaded_gems.detect {|gem| File.basename(File.dirname(df)).include?(gem)} }
         downloadfiles << 'Downloadfile' if File.exist?('Downloadfile')
         puts 'No gems were found with Downloadfile.' if downloadfiles.empty?
+        help_requested = subcommand == 'help' || subcommand == 'usage'
+        help_shown = false
         downloadfiles.each do |downloadfile|
           bundler_downloadfile = Bundler::Downloadfile.new(
             downloadfile,
@@ -39,9 +41,12 @@ module Bundler
             keep_existing: args.include?('--keep-existing'),
             all_operating_systems: args.include?('--all-operating-systems'),
           )
-          puts "== bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} =="
-          puts
-          bundler_downloadfile.send(subcommand)
+          if !help_requested || !help_shown
+            puts "== bundler-download - Bundler Plugin - v#{File.read(File.expand_path('../../../VERSION', __FILE__)).strip} =="
+            puts
+            bundler_downloadfile.send(subcommand)
+          end
+          help_shown = true if help_requested
         end
         true
       rescue => e
