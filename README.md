@@ -1,4 +1,4 @@
-# bundler-download - Bundler Plugin - v1.3.1
+# bundler-download - Bundler Plugin - v1.3.2
 [![Gem Version](https://badge.fury.io/rb/bundler-download.svg)](http://badge.fury.io/rb/bundler-download)
 
 Bundler plugin for auto-downloading extra gem files (e.g. large file downloads) specified in [`Downloadfile`](#downloadfile) after `bundle install`
@@ -68,23 +68,25 @@ The keyword `download` declares a file to download and takes the following argum
 
 ## App Bundler Plugin Instructions
 
-In plugin mode, all gems declared in Gemfile are inspected for presence of Downloadfile regardless of what group they belong to.
+In plugin mode, all gems declared in `Gemfile` are inspected for presence of `Downloadfile` regardless of what group they belong to.
 
-An app can depend on a gem that has a `Downloadfile` by adding the `bundler-download` plugin first (or manually installing via `bundle plugin install bundler-download`) and then including the gem in `Gemfile` like it normally would:
-
-```
-plugin 'bundler-download'
-
-gem 'some_gem_with_downloadfile'
-```
-
-Afterwards, run:
+An app can depend on a gem that has a `Downloadfile` by including in `Gemfile` and running:
 
 ```
-bundle install
+bundle
 ```
 
-(run one extra time if you don't have the `bundler-download` plugin installed yet since the first run would just install the plugin and subsequent runs would activate it)
+Afterwards install the `bundler-download` plugin via:
+
+```
+bundle plugin install bundler-download
+```
+
+Finally, `bundle` one extra time to activate the `bundler-download` plugin:
+
+```
+bundle
+```
 
 You should see something like this:
 
@@ -102,7 +104,7 @@ Using tty-cursor 0.7.1
 Using tty-screen 0.8.1
 Using unicode-display_width 1.7.0
 Using tty-progressbar 0.17.0
-Using bundler-download 1.3.1
+Using bundler-download 1.3.2
 Using facets 3.1.0
 Using glimmer 1.0.0
 bundle-download plugin gem-after-install-all hook:
@@ -117,7 +119,7 @@ Download path: /Users/User/.rvm/gems/ruby-2.7.1@tmp/gems/glimmer-1.0.0/cef/com.m
 Downloading 26% ( 59s ) [==============                                      ]
 ```
 
-After the initial download of files, running `bundle install` again will keep existing downloads without overwriting them unless you use the [`bundle-download`](#bundler-download-command) command to manually redownload files again.
+After the initial download of files, running `bundle` again will keep existing downloads without overwriting them unless you use the [`bundle-download`](#bundler-download-command) command to manually redownload files again.
 
 ### Bundler Download Command
 
@@ -165,7 +167,7 @@ bundle download help
 Prints:
 
 ```
-== bundler-download - Bundler Plugin - v1.3.1 ==
+== bundler-download - Bundler Plugin - v1.3.2 ==
 
 Commands/Subcommands/Options:
   bundle download help                     # Provide help by printing usage instructions
