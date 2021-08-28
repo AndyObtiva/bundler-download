@@ -21,7 +21,14 @@ If a Ruby Gem needs to depend on gems that have a [Downloadfile](#downloadfile),
 
 ## App Instructions
 
-App must declare a [`Downloadfile`](#downloadfile) at the root `'.'` path and then follow [App Bundler Plugin Instructions](#app-bundler-plugin-instructions)
+An app can add a [`Downloadfile`](#downloadfile) at the root `'.'` path and declare a `Gemfile` dependency on `bundler-download` directly:
+```ruby
+gem 'bundler-download', '~> 1.4'
+```
+
+Alternatively, an app can depend on a gem that depends on `bundler-download` as per [Gem Instructions](#gem-instructions).
+
+Finally, follow [App Bundler Plugin Instructions](#app-bundler-plugin-instructions) to obtain downloads.
 
 ## Gem Instructions
 
