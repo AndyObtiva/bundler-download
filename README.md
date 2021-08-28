@@ -281,4 +281,4 @@ Bundler::Download.new.exec('download', ['--keep-existing'])
 
 [MIT](LICENSE.txt)
 
-Copyright (c) 2020 Andy Maleh.
+Copyright (c) 2020-2021 Andy Maleh.

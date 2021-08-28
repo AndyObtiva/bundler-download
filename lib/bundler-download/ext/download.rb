@@ -1,5 +1,5 @@
-# Copyright (c) 2020 Andy Maleh
-# 
+# Copyright (c) 2020-2021 Andy Maleh
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -32,7 +32,7 @@ module Download
     def delete(hash={})
       set_multi(hash)
 
-      File.delete(file_path) if File.exist?(file_path)      
+      File.delete(file_path) if File.exist?(file_path)
     end
     
     def final_uri_and_head_response
@@ -46,7 +46,7 @@ module Download
           http.head(uri)
         end
         location = head_response['location'] if head_response['location']
-      end while head_response.is_a?(Net::HTTPRedirection)      
+      end while head_response.is_a?(Net::HTTPRedirection)
       [uri, head_response]
     end
     
@@ -79,6 +79,6 @@ module Download
 
       return file_path
 
-    end 
+    end
   end
 end
