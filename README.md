@@ -59,7 +59,7 @@ An app or gem `Downloadfile` contains `download` links for files that need to be
 Downloadfile entries follow this format (keyword args are optional):
 
 ```
-download url, to: gem_subdirectory, os: os
+download url, to: app_or_gem_subdirectory, os: os
 ```
 
 Example `Downloadfile`:
@@ -74,7 +74,7 @@ download 'http://dl.maketechnology.io/chromium-cef/rls/repository/plugins/com.ma
 
 The keyword `download` declares a file to download and takes the following arguments:
 1. Download URL string
-2. `to:` keyword arg: mentions a local download path relative to the gem installation directory (e.g. 'vendor' or 'lib/ai/data'). It automatically creates the path with all its subdirectories if it does not already exist. If left empty, then the file is downloaded to the gem directory root path.
+2. `to:` keyword arg: mentions a local download path relative to the app or gem installation directory (e.g. 'vendor' or 'lib/ai/data'). It automatically creates the path with all its subdirectories if it does not already exist. If left empty, then the file is downloaded to the app or gem directory root path.
 3. `os:` keyword arg (value: `mac` / `windows` / `linux`): limits the operating system under which the download is made. It is `nil` by default, allowing the download to occur in all operating systems.
 
 ## App Bundler Plugin Instructions
