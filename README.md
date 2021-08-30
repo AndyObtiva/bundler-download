@@ -9,7 +9,7 @@ The Ruby Gem ecosystem, famous for gems like Rails for web development, Devise f
 
 That said, you would not want to package extremely large files, like the OpenAI GPT-3 175 billion parameter models, in a Ruby Gem.
 
-Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with `bundle` by declaring gem downloads in a [Downloadfile](#downloadfile)
+Enter [bundler-download](https://rubygems.org/gems/bundler-download), a Bundler Plugin that enables downloading extra gem files after installing with `bundle` by declaring downloads in a [Downloadfile](#downloadfile)
 
 ## How It Works
 
