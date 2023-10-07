@@ -15,7 +15,7 @@ require 'juwelier'
 Juwelier::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = "bundler-download"
-  gem.homepage = "http://github.com/AndyObtiva/bundler-download"
+  gem.homepage = "https://github.com/AndyObtiva/bundler-download"
   gem.license = "MIT"
   gem.summary = %Q{bundler-download is a Bundler plugin for auto-downloading specified extra files on `bundle install`}
   gem.description = %Q{bundler-download is a Bundler plugin for auto-downloading gem-specified extra files (e.g. large file downloads) on `bundle install` from a `Downloadfile`}
